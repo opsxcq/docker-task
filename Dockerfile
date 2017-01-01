@@ -5,29 +5,26 @@ MAINTAINER opsxcq <opsxcq@thestorm.com.br>
 RUN apt-get update && \
     apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    package \
-    && \
+    python-pip \
+    python-dev \
+    build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY deps /deps
-RUN dpkg -i /deps/*
+RUN mkdir /src
+COPY src/requirements /src/
+WORKDIR /src
 
-COPY packages /packages
-RUN dpkg -i /packages/*
+RUN pip install -r requirements
 
-COPY src /src
-RUN cd /src &&     make
+COPY src/* /src/
 
-RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin username
-USER username
+RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin crash-report && \
+    chown crash-report -R /src
 
-EXPOSE 80
+USER crash-report
 
-VOLUME /data
-WORKDIR /data
+EXPOSE 8080
 
-COPY main.sh /
-ENTRYPOINT ["/main.sh"]
-CMD ["default"]
-
+ENTRYPOINT ["python"]
+CMD ["server.py"]
