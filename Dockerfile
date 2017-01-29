@@ -12,7 +12,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 
-RUN mkdir /src &&
+RUN mkdir /src && \
     mkdir /tasks
 
 COPY src/requirements /src/
