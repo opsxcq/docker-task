@@ -1,5 +1,8 @@
 import os
 import json
+import schedule
+import time
+import thread
 from flask import Flask, request, abort
 from flask_mail import Mail, Message
 
@@ -34,6 +37,15 @@ def webhookTrigger():
 def getStatus():
     return status
 
+def schedule():
+    schedule.every().wednesday.at("00:15").do(task)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+def task():
+    print("Doing the task")
+
 def sendEmail(title, body):
     msg = Message(title,
                   sender=sender,
@@ -46,4 +58,5 @@ def index():
     return "This is a service, and you are using it wrong !"
 
 if __name__ == "__main__":
+    thread.start_new_thread (schedule)
     app.run(host='0.0.0.0', port=8080,threaded=True)
