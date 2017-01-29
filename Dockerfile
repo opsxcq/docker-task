@@ -11,7 +11,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /src
+
+RUN mkdir /src &&
+    mkdir /tasks
+
 COPY src/requirements /src/
 WORKDIR /src
 
@@ -19,8 +22,8 @@ RUN pip install -r requirements
 
 COPY src/* /src/
 
-RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin crash-report && \
-    chown crash-report -R /src
+RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin task-runner && \
+    chown task-runner -R /src
 
 USER crash-report
 
