@@ -5,11 +5,13 @@ MAINTAINER opsxcq <opsxcq@thestorm.com.br>
 RUN apt-get update && \
     apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    curl \
+    git \
+    wget \
     python-pip \
     python-dev \
     build-essential && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean
 
 
 RUN mkdir /src && \
@@ -23,9 +25,9 @@ RUN pip install -r requirements
 COPY src/* /src/
 
 RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin task-runner && \
-    chown task-runner -R /src
+    chown task-runner -R /src /tasks
 
-USER crash-report
+USER task-runner
 
 EXPOSE 8080
 

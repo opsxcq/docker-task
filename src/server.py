@@ -14,6 +14,8 @@ app.config["MODE"] = os.environ["MODE"]
 # For webhook security
 app.config["TOKEN"] = os.environ["TOKEN"]
 
+app.config["INTERVAL"] = os.environ["INTERVAL"]
+
 # Mail configurations
 app.config["MAIL_TITLE"] = os.environ["MAIL_TITLE"]
 app.config["MAIL_SERVER"] = os.environ["MAIL_SERVER"]
