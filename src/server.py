@@ -1,10 +1,11 @@
 import os
-import json
+from subprocess import Popen, PIPE
+
 import schedule
 import time
 import thread
-import shlex
-import subprocess
+
+import json
 from flask import Flask, request, abort
 from flask_mail import Mail, Message
 
