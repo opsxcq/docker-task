@@ -16,7 +16,7 @@ app.config["MODE"] = os.environ.get("MODE", None)
 if app.config["MODE"] == "cron":
     print("[+] Starting in cron mode")
     # If no interval is passed, it will be executed hourly
-    app.config["INTERVAL"] = os.environ.get("INTERVAL", 3600)
+    app.config["INTERVAL"] = int(os.environ.get("INTERVAL", 3600))
 
 if app.config["MODE"] == "http":
     # For webhook security
@@ -54,7 +54,7 @@ def getStatus():
     return status
 
 def scheduler():
-    schedule.every(10).seconds.do(task)
+    schedule.every(app.config["INTERVAL"]).seconds.do(task)
     while True:
         schedule.run_pending()
         time.sleep(1)
