@@ -1,9 +1,9 @@
 import os
 import json
-from schedule import *
 import schedule
 import time
 import thread
+import shlex
 import subprocess
 from flask import Flask, request, abort
 from flask_mail import Mail, Message
@@ -61,7 +61,12 @@ def scheduler():
 
 def task():
     print("[+] Executing the task")
-    result = subprocess.run(['ls', '-l'], stdout=subprocess.PIPE)
+    proc = Popen(["/task.sh"], stdout=PIPE, stderr=PIPE)
+    stdout, stderr = proc.communicate()
+    exitcode = proc.returncode
+    print("[+] Task done, output: ")
+    print(stdout)
+    print(stderr)
 
 def sendEmail(title, body):
     msg = Message(title,
