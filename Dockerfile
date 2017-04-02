@@ -8,6 +8,8 @@ RUN apt-get update && \
     curl \
     git \
     wget \
+    rsync \
+    ssh \
     python-pip \
     python-dev \
     build-essential && \
