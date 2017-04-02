@@ -25,7 +25,6 @@ if app.config["MODE"] == "http":
 
 # Notifications
 app.config["NOTIFY"] = os.environ.get("NOTIFY", None)
-
 if app.config["NOTIFY"] == "email":
     # Mail configurations
     app.config["MAIL_TITLE"] = os.environ["MAIL_TITLE"]
