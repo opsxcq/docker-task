@@ -12,6 +12,8 @@ RUN apt-get update && \
     ssh \
     python-pip \
     python-dev \
+    unzip \
+    unrar-free \
     build-essential && \
     apt-get clean
 
