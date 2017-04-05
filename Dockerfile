@@ -29,7 +29,10 @@ RUN pip install -r requirements
 COPY src/* /src/
 
 RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin task-runner && \
-    chown task-runner -R /src /tasks
+    chown task-runner -R /src /tasks 
+
+RUN mkdir /data && \
+    chown task-runner /data
 
 USER task-runner
 
