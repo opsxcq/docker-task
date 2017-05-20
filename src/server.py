@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 
 import schedule
 import time
-import thread
+from threading import Thread
 
 import json
 from flask import Flask, request, abort
@@ -55,7 +55,8 @@ def getStatus():
 
 def scheduler():
     # Run for the very first time, so we get a result
-    task()
+    print("[+] Starting the cron scheduller")
+    #task()
     schedule.every(app.config["INTERVAL"]).seconds.do(task)
     while True:
         schedule.run_pending()
@@ -82,5 +83,11 @@ def index():
     return "This is a service, and you are using it wrong !"
 
 if __name__ == "__main__":
-    thread.start_new_thread (scheduler,())
-    app.run(host='0.0.0.0', port=8080,threaded=True)
+    print("[+] BEFORE EVERYTHING")
+    schedulerThread = Thread(target=scheduler)
+    print("[+] Before shit")
+    schedulerThread.daemon = True
+    schedulerThread.start()
+    print("[+] Thread started")
+    #app.run(host='0.0.0.0', port=8080,threaded=True)
+    schedulerThread.join()
