@@ -54,6 +54,8 @@ def getStatus():
     return status
 
 def scheduler():
+    # Run for the very first time, so we get a result
+    task()
     schedule.every(app.config["INTERVAL"]).seconds.do(task)
     while True:
         schedule.run_pending()
