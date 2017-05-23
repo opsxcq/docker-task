@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Main script
+
 mode=$1
 if [ -z "$mode" ]
 then
