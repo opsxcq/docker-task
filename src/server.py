@@ -56,7 +56,7 @@ def getStatus():
 def scheduler():
     # Run for the very first time, so we get a result
     print("[+] Starting the cron scheduller")
-    #task()
+    task()
     schedule.every(app.config["INTERVAL"]).seconds.do(task)
     while True:
         schedule.run_pending()
@@ -83,11 +83,8 @@ def index():
     return "This is a service, and you are using it wrong !"
 
 if __name__ == "__main__":
-    print("[+] BEFORE EVERYTHING")
     schedulerThread = Thread(target=scheduler)
-    print("[+] Before shit")
     schedulerThread.daemon = True
     schedulerThread.start()
-    print("[+] Thread started")
     #app.run(host='0.0.0.0', port=8080,threaded=True)
     schedulerThread.join()
