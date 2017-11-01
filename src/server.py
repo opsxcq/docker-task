@@ -19,10 +19,6 @@ if app.config["MODE"] == "cron":
     # If no interval is passed, it will be executed hourly
     app.config["INTERVAL"] = int(os.environ.get("INTERVAL", 3600))
 
-if app.config["MODE"] == "http":
-    # For webhook security
-    app.config["TOKEN"] = os.environ.get("TOKEN", None)
-
 # Notifications
 app.config["NOTIFY"] = os.environ.get("NOTIFY", None)
 if app.config["NOTIFY"] == "email":
@@ -38,20 +34,11 @@ if app.config["NOTIFY"] == "email":
 
     sender = os.environ["MAIL_SENDER"]
     recipient = os.environ["MAIL_RECIPIENT"]
-
+    mailTitle = os.environ["MAIL_TITLE"]
+    
 if not os.path.isfile("/task.sh"):
     print("[+] /task.sh or /task.py not found, please specify a task")
     exit(-1)
-
-status='WAITING'
-
-@app.route('/api/trigger', methods=['POST'])
-def webhookTrigger():
-    return "OK"
-
-@app.route('/api/status', methods=['GET'])
-def getStatus():
-    return status
 
 def scheduler():
     # Run for the very first time, so we get a result
@@ -70,7 +57,9 @@ def task():
     print("[+] Task done, output: ")
     print(stdout)
     print(stderr)
-
+    body = stdout + "\n\n\n" + stderr
+    sendEmail(mailTitle, body)
+    
 def sendEmail(title, body):
     msg = Message(title,
                   sender=sender,

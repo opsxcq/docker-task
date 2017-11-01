@@ -1,7 +1,27 @@
-# docker-task
+# Docker Task
 
-How to run to test
+This is a simple way to run tasks in a certain interval inside a docker container.
+
+# Customizating your task
+
+This image doesn't do anything by itself, you need to extend (`FROM`) this image to make it work as you want. Copy your task, or the script to start your task, to `/task.sh`, that it's done.
+
+# Running your task
+
+Just start your task container as
 
 ```
-docker run --rm -it -e "INVERTAL=3600" -e "MODE=cron" -v "$(pwd)/git-conf:/run/secrets/gitconfig" -v "$(pwd)/git-key:/run/secrets/id_rsa" strm/task-ipblacklist
+docker run --rm -it \
+	-e "INVERTAL=3600" \
+	-e "MODE=cron"
+	yourimage
 ```
+
+# Variables
+
+ * `INTERVAL` - The interval, in seconds, between each task execution.
+ * `MODE` - The operation mode, `cron` is the only one at the moment, and forever, see [deprecation](/#deprecation notice) notice bellow.
+
+# Deprecation notice
+
+This project is deprecated, move to [tasker](https://github.com/opsxcq/tasker) to have a better task management.
