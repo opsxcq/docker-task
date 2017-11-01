@@ -1,4 +1,5 @@
 # Docker Task
+[![Docker Pulls](https://img.shields.io/docker/pulls/strm/task.svg?style=plastic)](https://hub.docker.com/r/strm/task/)
 
 This is a simple way to run tasks in a certain interval inside a docker container.
 
@@ -25,3 +26,4 @@ docker run --rm -it \
 # Deprecation notice
 
 This project is deprecated, move to [tasker](https://github.com/opsxcq/tasker) to have a better task management.
+
