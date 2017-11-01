@@ -21,7 +21,7 @@ docker run --rm -it \
 # Variables
 
  * `INTERVAL` - The interval, in seconds, between each task execution.
- * `MODE` - The operation mode, `cron` is the only one at the moment, and forever, see [deprecation](/#deprecation notice) notice bellow.
+ * `MODE` - The operation mode, `cron` is the only one at the moment, and forever, see [deprecation](/#deprecation-notice) notice bellow.
 
 # Deprecation notice
 
